@@ -11,7 +11,6 @@ class GreedySolver(Solver):
         self.pieces_per_pizza = pieces_per_pizza
 
     def solve(self, orders: List[Order]) -> List[Pizza]:
-        # create pizzas
         pizzas: List[Pizza] = []
         for variant in reversed(variants):
             for order in orders:
