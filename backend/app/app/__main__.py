@@ -18,22 +18,41 @@ orders = db["orders"]
 orders.create_column('user_name', db.types.string, unique=True, nullable=False)
 
 
-@app.route("/order", methods=["POST"])
-def add_order():
+def get_and_check_order() -> Order:
     try:
         order = Order(**request.json)
     except TypeError:
-        return jsonify({"error": "Invalid order"}), 400
+        raise OrderValidException("invalidJson")
+    order.check_validity()
+    return order
+
+
+def order_exception_to_response(e: OrderValidException):
+    return jsonify({"error": e.message_key, "variant": e.variant}), 400
+
+
+@app.route("/order", methods=["POST"])
+def add_order():
     try:
-        order.check_validity()
+        order = get_and_check_order()
     except OrderValidException as e:
-        return jsonify({"error": e.message_key, "variant": e.variant}), 400
+        return order_exception_to_response(e)
     order_dict = dict(order)
     del order_dict["id"]
     try:
         order.id = orders.insert(order_dict)
     except IntegrityError as e:
         return jsonify({"error": "userExists"}), 400
+    return jsonify(order)
+
+
+@app.route("/order", methods=["PUT"])
+def update_order():
+    try:
+        order = get_and_check_order()
+    except OrderValidException as e:
+        return order_exception_to_response(e)
+    orders.update(dict(order), ["id"])
     return jsonify(order)
 
 
