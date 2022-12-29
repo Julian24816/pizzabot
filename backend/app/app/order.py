@@ -4,7 +4,9 @@ from app.solver.pizza_variant import variants
 
 
 class OrderValidException(Exception):
-    pass
+    def __init__(self, message_key: str, variant: str = None):
+        self.message_key = message_key
+        self.variant = variant
 
 
 @dataclass
@@ -15,14 +17,14 @@ class Order:
 
     def check_validity(self):
         if self.user_name.strip() == "":
-            raise OrderValidException("Name is missing!")
+            raise OrderValidException("missingName")
         for variant, pieces in self.number_of_pieces.items():
             if pieces < 0:
-                raise OrderValidException(f"Invalid number of pieces for {variant}!")
+                raise OrderValidException("invalidPieceNumber", variant)
             if variant not in variants:
-                raise OrderValidException(f"unknown variant: {variant}")
+                raise OrderValidException("unknownVariant", variant)
         if sum(self.number_of_pieces.values()) == 0:
-            raise OrderValidException("No pieces ordered!")
+            raise OrderValidException("nothingOrdered")
 
     def __iter__(self):
         yield "user_name", self.user_name

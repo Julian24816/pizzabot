@@ -1,1 +1,38 @@
-{}
+{
+  "links": {
+    "orders": "Bestellungen",
+    "imprint": "Impressum"
+  },
+  "create": {
+    "title": "Bestellung",
+    "error": {
+      "missingName": "Name fehlt!",
+      "invalidPieceNumber": "Ungültige Anzahl Stücke bei: {variant}!",
+      "unknownVariant": "Unbekannte Pizza Variante: {variant}!",
+      "nothingOrdered": "Keine Stücke bestellt!",
+      "userExists": "Name wird bereits benutzt!"
+    },
+    "placeholders": {
+      "name": "Name",
+      "variants": {
+        "meat": "Anzahl Stücke mit Fleisch",
+        "vegetarian": "Anzahl vegetarische Stücke",
+        "vegan": "Anzahl vegane Stücke"
+      }
+    }
+  },
+  "order": {
+    "title": "Bestellungen",
+    "tableHeadings": {
+      "name": "Name"
+    },
+    "error": "Fehler beim Löschen der Bestellung"
+  },
+  "solved": {
+    "title": "Verteilung",
+    "tableHeadings": {
+      "variant": "Sorte",
+      "who": "Für:"
+    }
+  }
+}

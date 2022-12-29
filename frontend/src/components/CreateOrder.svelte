@@ -1,7 +1,9 @@
 <script>
 
+    import {_} from 'svelte-i18n';
     import {link, push} from 'svelte-spa-router';
     import NumberWithArrows from "./inputs/NumberWithArrows.svelte";
+    import Footer from "./Footer.svelte";
 
     let order = {
         user_name: "",
@@ -25,31 +27,43 @@
             localStorage.setItem('orderID', orderResponse.id);
             await push('/orders');
         } else {
-            alert("Error creating order: " + orderResponse.error);
+            alert($_(
+                `create.error.${orderResponse.error}`,
+                {values: {variant: orderResponse.variant}}
+            ));
         }
     }
 
 </script>
 
 
-<h1>Create Order</h1>
-<input type="text" required bind:value={order.user_name} placeholder="Name"/>
+<h1>{ $_("create.title") }</h1>
+<input bind:value={order.user_name} placeholder={$_("create.placeholders.name")} required type="text"/>
 <div class="numberInput">
-    <NumberWithArrows bind:value={order.number_of_pieces.meat} min={ 0 } placeholder="Number of meat pieces"/>
+    <label>🥩
+        <NumberWithArrows bind:value={order.number_of_pieces.meat} min={ 0 }
+                          placeholder={$_("create.placeholders.variants.meat")}/>
+    </label>
 </div>
 <div class="numberInput">
-    <NumberWithArrows
-            bind:value={order.number_of_pieces.vegetarian} min={ 0 } placeholder="Number of vegetarian pieces"/>
+    <label>🧀
+        <NumberWithArrows
+                bind:value={order.number_of_pieces.vegetarian} min={ 0 }
+                placeholder={$_("create.placeholders.variants.vegetarian")}/>
+    </label>
 </div>
 <div class="numberInput">
-    <NumberWithArrows bind:value={order.number_of_pieces.vegan} min={ 0 } placeholder="Number of vegan pieces"/>
+    <label>🍀
+        <NumberWithArrows bind:value={order.number_of_pieces.vegan} min={ 0 }
+                          placeholder={$_("create.placeholders.variants.vegan")}/>
+    </label>
 </div>
-<button on:click={ createOrder }>Create Order</button>
+<button on:click={ createOrder }>✅</button>
 
 <br><br><br><br><br>
-<hr>
-<a href="/orders" use:link>Orders</a>
-<a href="/imprint" use:link>Imprint</a>
+<Footer>
+    <a href="/orders" use:link>{ $_("links.orders") }</a>
+</Footer>
 
 
 <style>

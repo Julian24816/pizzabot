@@ -1,6 +1,8 @@
 <script>
-    import {link, push} from 'svelte-spa-router';
+    import {_} from "svelte-i18n";
+    import {push} from 'svelte-spa-router';
     import {onMount} from "svelte";
+    import Footer from "./Footer.svelte";
 
     let orders = [];
     let solved = [];
@@ -20,7 +22,7 @@
         if (resp.ok) {
             orders = orders.filter(order => order.id !== id);
         } else {
-            alert('Error deleting order');
+            alert($_("order.error"));
         }
     }
 
@@ -40,11 +42,11 @@
 </script>
 
 
-<h1>Orders</h1>
+<h1>{ $_("order.title") }</h1>
 <table>
     <thead>
     <tr>
-        <th>Name</th>
+        <th>{ $_("order.tableHeadings.name") }</th>
         <th>🥩</th>
         <th>🧀</th>
         <th>🍀</th>
@@ -76,12 +78,12 @@
 <button on:click={ () => push("/") }>➕</button>
 
 
-<h1>Solved</h1>
+<h1>{ $_("solved.title") }</h1>
 <table>
     <thead>
     <tr>
-        <th>Variant</th>
-        <th>Who?</th>
+        <th>{ $_("solved.tableHeadings.variant") }</th>
+        <th>{ $_("solved.tableHeadings.who") }</th>
     </tr>
     </thead>
     <tbody>
@@ -100,9 +102,7 @@
 
 
 <br><br><br><br><br><br>
-<hr>
-
-<a href="/imprint" use:link>Imprint</a>
+<Footer/>
 
 
 <style>
