@@ -1,3 +1,4 @@
 dataset==1.5.2
+eventlet==0.30.2
 Flask==2.2.2
 SQLAlchemy==1.4.42
