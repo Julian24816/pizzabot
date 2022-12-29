@@ -1,7 +1,9 @@
+import dataset
+from app.helpers.parse_order import parse_order
+from app.solver.greedy_solver import GreedySolver
 from flask import Flask, request, jsonify
 from flask_cors import *
-import dataset
-
+from sqlalchemy.exc import IntegrityError
 from .order import Order, OrderValidException
 
 app = Flask(
@@ -13,6 +15,7 @@ CORS(app)
 db = dataset.connect(
     'sqlite:///db.sqlite', engine_kwargs={"connect_args": {'check_same_thread': False}})
 orders = db["orders"]
+orders.create_column('user_name', db.types.string, unique=True, nullable=False)
 
 
 @app.route("/order", methods=["POST"])
@@ -27,7 +30,10 @@ def add_order():
         return jsonify({"error": str(e)}), 400
     order_dict = dict(order)
     del order_dict["id"]
-    order.id = orders.insert(order_dict)
+    try:
+        order.id = orders.insert(order_dict)
+    except IntegrityError:
+        return jsonify({"error": "User already exists"}), 400
     return jsonify(order)
 
 
@@ -37,9 +43,20 @@ def delete_order(id: int):
     return "", 204
 
 
+def get_all_orders() -> list[Order]:
+    return [parse_order(order) for order in orders]
+
+
 @app.route("/order")
 def get_orders():
-    return jsonify([Order(**order) for order in orders])
+    return jsonify(get_all_orders())
+
+
+@app.route("/solved")
+def solved():
+    solver = GreedySolver()
+    pizzas = solver.solve(get_all_orders())
+    return jsonify([dict(pizza) for pizza in pizzas])
 
 
 @app.route("/")
