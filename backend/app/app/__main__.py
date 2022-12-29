@@ -27,13 +27,13 @@ def add_order():
     try:
         order.check_validity()
     except OrderValidException as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"error": e.message_key, "variant": e.variant}), 400
     order_dict = dict(order)
     del order_dict["id"]
     try:
         order.id = orders.insert(order_dict)
-    except IntegrityError:
-        return jsonify({"error": "User already exists"}), 400
+    except IntegrityError as e:
+        return jsonify({"error": "userExists"}), 400
     return jsonify(order)
 
 

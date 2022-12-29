@@ -1,1 +1,38 @@
-{}
+{
+  "links": {
+    "orders": "Orders",
+    "imprint": "Imprint"
+  },
+  "create": {
+    "title": "Create Order",
+    "error": {
+      "missingName": "Name is missing!",
+      "invalidPieceNumber": "Invalid number of pieces for {variant}!",
+      "unknownVariant": "Unknown variant: {variant}!",
+      "nothingOrdered": "No pieces ordered!",
+      "userExists": "Name already used!"
+    },
+    "placeholders": {
+      "name": "Name",
+      "variants": {
+        "meat": "Number of meat pieces",
+        "vegetarian": "Number of vegetarian pieces",
+        "vegan": "Number of vegan pieces"
+      }
+    }
+  },
+  "order": {
+    "title": "Orders",
+    "tableHeadings": {
+      "name": "Name"
+    },
+    "error": "Error deleting order"
+  },
+  "solved": {
+    "title": "Solved",
+    "tableHeadings": {
+      "variant": "Variant",
+      "who": "Who?"
+    }
+  }
+}
