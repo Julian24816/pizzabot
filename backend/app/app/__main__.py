@@ -15,7 +15,7 @@ db = dataset.connect(
 
 @app.route("/")
 def index():
-    return redirect("Hi")
+    return "Hi"
 
 if __name__ == "__main__":
     socketio.run(
