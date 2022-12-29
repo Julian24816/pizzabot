@@ -38,3 +38,4 @@
 
 
 <a href="/orders" use:link>Orders</a>
+<a href="/imprint" use:link>Imprint</a>

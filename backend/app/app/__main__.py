@@ -31,10 +31,9 @@ def add_order():
     return jsonify(order)
 
 
-@app.route("/order", methods=["DELETE"])
-def delete_order():
-    order_id = request.json["id"]
-    orders.delete(id=order_id)
+@app.route("/order/<int:id>", methods=["DELETE"])
+def delete_order(id: int):
+    orders.delete(id=id)
     return "", 204
 
 

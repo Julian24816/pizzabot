@@ -1,45 +1,61 @@
 <script>
     import {link} from 'svelte-spa-router';
+    import {onMount} from "svelte";
+
+    let orders = [];
 
     async function fetchOrders() {
         const response = await fetch('/order');
-        return await response.json();
+        orders = await response.json();
     }
+
+    async function deleteOrder(id) {
+        const resp = await fetch(`/order/${id}`, {method: 'DELETE'});
+        if (resp.ok) {
+            orders = orders.filter(order => order.id !== id);
+        } else {
+            alert('Error deleting order');
+        }
+    }
+
+    onMount(() => {
+        fetchOrders();
+    });
 </script>
 
 
-<a href="/" use:link>Create</a>
-
-
-{#await fetchOrders() then orders}
-    <table>
-        <thead>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Meat</th>
+        <th>Vegetarian</th>
+        <th>Vegan</th>
+    </tr>
+    </thead>
+    <tbody>
+    {#each orders as order}
         <tr>
-            <th>Name</th>
-            <th>Meat</th>
-            <th>Vegetarian</th>
-            <th>Vegan</th>
+            <td>
+                { order.user_name }:
+            </td>
+            <td>
+                { order.number_of_meat_pieces }
+            </td>
+            <td>
+                { order.number_of_vegetarian_pieces }
+            </td>
+            <td>
+                { order.number_of_vegan_pieces }
+            </td>
+            <td>
+                <button on:click={ () => deleteOrder(order.id) }>Delete</button>
+            </td>
         </tr>
-        </thead>
-        <tbody>
-        {#each orders as order}
-            <tr>
-                <td>
-                    { order.user_name }:
-                </td>
-                <td>
-                    { order.number_of_meat_pieces }
-                </td>
-                <td>
-                    { order.number_of_vegetarian_pieces }
-                </td>
-                <td>
-                    { order.number_of_vegan_pieces }
-                </td>
-            </tr>
-        {/each}
-        </tbody>
-    </table>
-{:catch error}
-    <p>Failed to load orders</p>
-{/await}
+    {/each}
+    </tbody>
+</table>
+
+
+<a href="/" use:link>Create</a>
+<a href="/imprint" use:link>Imprint</a>
