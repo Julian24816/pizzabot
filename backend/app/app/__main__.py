@@ -39,6 +39,16 @@ def get_orders():
     return jsonify([Order(**order) for order in orders])
 
 
+@app.route("/")
+def index():
+    return app.send_static_file("index.html")
+
+
+@app.route("/<path:path>")
+def serve(path):
+    return app.send_static_file(path)
+
+
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",

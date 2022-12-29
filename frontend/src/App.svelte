@@ -1,9 +1,6 @@
 <script>
+    import Router from 'svelte-spa-router';
+    import routes from './js/routes.js';
 </script>
 
-Hello world
-
-
-<style>
-    
-</style>
+<Router { routes } />
