@@ -1,7 +1,8 @@
+import dataset
+from app.helpers.parse_order import parse_order
+from app.solver.greedy_solver import GreedySolver
 from flask import Flask, request, jsonify
 from flask_cors import *
-import dataset
-
 from .order import Order, OrderValidException
 
 app = Flask(
@@ -13,6 +14,7 @@ CORS(app)
 db = dataset.connect(
     'sqlite:///db.sqlite', engine_kwargs={"connect_args": {'check_same_thread': False}})
 orders = db["orders"]
+orders.create_column('user_name', db.types.string, unique=True, nullable=False)
 
 
 @app.route("/order", methods=["POST"])
@@ -37,9 +39,20 @@ def delete_order(id: int):
     return "", 204
 
 
+def get_all_orders() -> list[Order]:
+    return [parse_order(order) for order in orders]
+
+
 @app.route("/order")
 def get_orders():
-    return jsonify([Order(**order) for order in orders])
+    return jsonify(get_all_orders())
+
+
+@app.route("/solved")
+def solved():
+    solver = GreedySolver()
+    pizzas = solver.solve(get_all_orders())
+    return jsonify([dict(pizza) for pizza in pizzas])
 
 
 @app.route("/")

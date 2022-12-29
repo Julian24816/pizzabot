@@ -1,0 +1,1 @@
+variants = ["meat", "vegetarian", "vegan"]
