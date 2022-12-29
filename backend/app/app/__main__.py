@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import *
 import dataset
 
-from .order import Order
+from .order import Order, OrderValidException
 
 app = Flask(
     __name__,
@@ -15,12 +15,16 @@ db = dataset.connect(
 orders = db["orders"]
 
 
-@app.route("/order", methods=["PUT"])
+@app.route("/order", methods=["POST"])
 def add_order():
     try:
         order = Order(**request.json)
     except TypeError:
         return jsonify({"error": "Invalid order"}), 400
+    try:
+        order.check_validity()
+    except OrderValidException as e:
+        return jsonify({"error": str(e)}), 400
     order_dict = dict(order)
     del order_dict["id"]
     order.id = orders.insert(order_dict)
