@@ -4,6 +4,7 @@
     import {link, push} from 'svelte-spa-router';
     import NumberWithArrows from "./inputs/NumberWithArrows.svelte";
     import Footer from "./Footer.svelte";
+    import editKeys, {saveEditKeys} from "../js/editKeys";
 
     let order = {
         user_name: "",
@@ -25,6 +26,8 @@
         const orderResponse = await response.json();
         if (response.ok) {
             localStorage.setItem('orderID', orderResponse.id);
+            editKeys[orderResponse.id] = orderResponse.edit_key;
+            saveEditKeys();
             await push('/orders');
         } else {
             alert($_(
@@ -58,7 +61,7 @@
                           placeholder={$_("create.placeholders.variants.vegan")}/>
     </label>
 </div>
-<button on:click={ createOrder }>✅</button>
+<button on:click={ createOrder }>✅🍕</button>
 
 <br><br><br><br><br>
 <Footer>

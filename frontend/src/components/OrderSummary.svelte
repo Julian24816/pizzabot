@@ -3,6 +3,7 @@
     import {push} from 'svelte-spa-router';
     import {onMount} from "svelte";
     import Footer from "./Footer.svelte";
+    import OrderDeleteButton from "./inputs/OrderDeleteButton.svelte";
 
     let orders = [];
     let solved = [];
@@ -15,15 +16,6 @@
     async function fetchSolved() {
         const response = await fetch('/solved');
         solved = await response.json();
-    }
-
-    async function deleteOrder(id) {
-        const resp = await fetch(`/order/${id}`, {method: 'DELETE'});
-        if (resp.ok) {
-            orders = orders.filter(order => order.id !== id);
-        } else {
-            alert($_("order.error"));
-        }
     }
 
     function formatPizzaNames(orders, targetNumber) {
@@ -68,7 +60,7 @@
                 { order.number_of_pieces.vegan }
             </td>
             <td>
-                <button on:click={ () => deleteOrder(order.id) }>🗑️</button>
+                <OrderDeleteButton {order} bind:orders/>
             </td>
         </tr>
     {/each}
