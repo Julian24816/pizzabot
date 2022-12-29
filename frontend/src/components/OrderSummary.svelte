@@ -1,5 +1,5 @@
 <script>
-    import {link} from 'svelte-spa-router';
+    import {link, push} from 'svelte-spa-router';
     import {onMount} from "svelte";
 
     let orders = [];
@@ -24,9 +24,11 @@
         }
     }
 
-    function formatPizzaNames(orders) {
+    function formatPizzaNames(orders, targetNumber) {
         let names = {};
         for (let order of orders) names[order.user_name] = (names[order.user_name] || 0) + 1;
+        const nobody = targetNumber - Object.values(names).reduce((a, b) => a + b, 0)
+        if (nobody > 0) names["nobody"] = nobody;
         let namesWithNumbers = Object.keys(names).map(name => `${name} ${names[name]}x`);
         return namesWithNumbers.join(', ');
     }
@@ -38,13 +40,14 @@
 </script>
 
 
+<h1>Orders</h1>
 <table>
     <thead>
     <tr>
         <th>Name</th>
-        <th>Meat</th>
-        <th>Vegetarian</th>
-        <th>Vegan</th>
+        <th>🥩</th>
+        <th>🧀</th>
+        <th>🍀</th>
     </tr>
     </thead>
     <tbody>
@@ -63,12 +66,14 @@
                 { order.number_of_pieces.vegan }
             </td>
             <td>
-                <button on:click={ () => deleteOrder(order.id) }>Delete</button>
+                <button on:click={ () => deleteOrder(order.id) }>🗑️</button>
             </td>
         </tr>
     {/each}
     </tbody>
 </table>
+
+<button on:click={ () => push("/") }>➕</button>
 
 
 <h1>Solved</h1>
@@ -86,7 +91,7 @@
                 { pizza.variant }
             </td>
             <td>
-                { formatPizzaNames(pizza.assigned_orders) }
+                { formatPizzaNames(pizza.assigned_orders, pizza.pieces) }
             </td>
         </tr>
     {/each}
@@ -94,5 +99,20 @@
 </table>
 
 
-<a href="/" use:link>Create</a>
+<br><br><br><br><br><br>
+<hr>
+
 <a href="/imprint" use:link>Imprint</a>
+
+
+<style>
+
+    th {
+        text-align: left;
+    }
+
+    td {
+        padding-right: 1em;
+    }
+
+</style>

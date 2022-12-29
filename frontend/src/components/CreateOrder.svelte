@@ -1,6 +1,7 @@
 <script>
 
     import {link, push} from 'svelte-spa-router';
+    import NumberWithArrows from "./inputs/NumberWithArrows.svelte";
 
     let order = {
         user_name: "",
@@ -33,11 +34,34 @@
 
 <h1>Create Order</h1>
 <input type="text" required bind:value={order.user_name} placeholder="Name"/>
-<input bind:value={order.number_of_pieces.meat} placeholder="Number of meat pieces" type="number"/>
-<input bind:value={order.number_of_pieces.vegetarian} placeholder="Number of vegetarian pieces" type="number"/>
-<input bind:value={order.number_of_pieces.vegan} placeholder="Number of vegan pieces" type="number"/>
+<div class="numberInput">
+    <NumberWithArrows bind:value={order.number_of_pieces.meat} min={ 0 } placeholder="Number of meat pieces"/>
+</div>
+<div class="numberInput">
+    <NumberWithArrows
+            bind:value={order.number_of_pieces.vegetarian} min={ 0 } placeholder="Number of vegetarian pieces"/>
+</div>
+<div class="numberInput">
+    <NumberWithArrows bind:value={order.number_of_pieces.vegan} min={ 0 } placeholder="Number of vegan pieces"/>
+</div>
 <button on:click={ createOrder }>Create Order</button>
 
-
+<br><br><br><br><br>
+<hr>
 <a href="/orders" use:link>Orders</a>
 <a href="/imprint" use:link>Imprint</a>
+
+
+<style>
+
+    input {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.5em;
+    }
+
+    .numberInput {
+        margin: 8px 0;
+    }
+
+</style>
