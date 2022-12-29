@@ -3,6 +3,7 @@ from app.helpers.parse_order import parse_order
 from app.solver.greedy_solver import GreedySolver
 from flask import Flask, request, jsonify
 from flask_cors import *
+from sqlalchemy.exc import IntegrityError
 from .order import Order, OrderValidException
 
 app = Flask(
@@ -29,7 +30,10 @@ def add_order():
         return jsonify({"error": str(e)}), 400
     order_dict = dict(order)
     del order_dict["id"]
-    order.id = orders.insert(order_dict)
+    try:
+        order.id = orders.insert(order_dict)
+    except IntegrityError:
+        return jsonify({"error": "User already exists"}), 400
     return jsonify(order)
 
 
