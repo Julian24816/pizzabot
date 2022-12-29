@@ -1,0 +1,22 @@
+[Unit]
+Description=Pizzabot Docker Compose Application Service
+Requires=docker.service
+After=docker.service
+
+[Service]
+# For configuration, uncomment the following lines
+# and edit the paths to match your setup.
+#Environment="PORT=<choose a port>"
+#User=someuser
+#Group=somegroup
+Type=oneshot
+RemainAfterExit=yes
+# You need to change the following directory to match the one on your server:
+WorkingDirectory=/home/server/pizzabot/backend
+# You might need to change the location of the docker-compose binary to the output of `which docker-compose`:
+ExecStart=/usr/local/bin/docker-compose up -d --build
+ExecStop=/usr/local/bin/docker-compose stop
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
