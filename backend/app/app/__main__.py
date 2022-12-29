@@ -1,9 +1,12 @@
+from typing import List
+
 import dataset
-from app.helpers.parse_order import parse_order
-from app.solver.greedy_solver import GreedySolver
 from flask import Flask, request, jsonify
 from flask_cors import *
 from sqlalchemy.exc import IntegrityError
+
+from app.helpers.parse_order import parse_order
+from app.solver.greedy_solver import GreedySolver
 from .order import Order, OrderValidException
 
 app = Flask(
@@ -43,7 +46,7 @@ def delete_order(id: int):
     return "", 204
 
 
-def get_all_orders() -> list[Order]:
+def get_all_orders() -> List[Order]:
     return [parse_order(order) for order in orders]
 
 

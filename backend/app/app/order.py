@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict
+
 from app.solver.pizza_variant import variants
 
 
@@ -13,7 +14,7 @@ class OrderValidException(Exception):
 class Order:
     user_name: str
     number_of_pieces: Dict[str, int]
-    id: int | None = None
+    id: int = None
 
     def check_validity(self):
         if self.user_name.strip() == "":
