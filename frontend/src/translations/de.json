@@ -3,6 +3,9 @@
     "orders": "Bestellungen",
     "imprint": "Impressum"
   },
+  "admin": {
+    "title": "Admin Einstellungen"
+  },
   "create": {
     "title": "Bestellung",
     "error": {

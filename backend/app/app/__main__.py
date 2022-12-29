@@ -1,9 +1,10 @@
 import dataset
-from app.helpers.parse_order import parse_order
-from app.solver.greedy_solver import GreedySolver
 from flask import Flask, request, jsonify
 from flask_cors import *
 from sqlalchemy.exc import IntegrityError
+
+from app.helpers.parse_order import parse_order
+from app.solver.greedy_solver import GreedySolver
 from .order import Order, OrderValidException
 
 app = Flask(
@@ -12,10 +13,13 @@ app = Flask(
     static_url_path="/static",
 )
 CORS(app)
+
 db = dataset.connect(
     'sqlite:///db.sqlite', engine_kwargs={"connect_args": {'check_same_thread': False}})
 orders = db["orders"]
 orders.create_column('user_name', db.types.string, unique=True, nullable=False)
+settings = db["settings"]
+settings.create_column('key', db.types.string, primary_key=True)
 
 
 @app.route("/order", methods=["POST"])

@@ -5,9 +5,15 @@
       <sourceFolder url="file://$MODULE_DIR$/backend/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/backend/venv/lib/python3.10/site-packages" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (venv)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (pizzabot)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="D:\projects\pizzabot\backend\app\requirements.txt" />
+    <option name="removeUnused" value="true" />
+    <option name="modifyBaseFiles" value="true" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="GOOGLE" />
