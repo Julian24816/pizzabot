@@ -31,7 +31,7 @@ def add_order():
 def delete_order():
     order_id = request.json["id"]
     orders.delete(id=order_id)
-    return jsonify({"success": True})
+    return "", 204
 
 
 @app.route("/order")
