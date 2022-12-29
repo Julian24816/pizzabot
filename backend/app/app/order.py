@@ -16,7 +16,7 @@ class Order:
     user_name: str
     number_of_pieces: Dict[str, int]
     edit_key: str = None
-    id: int | None = None
+    id: int = None
 
     def __post_init__(self):
         self.check_validity()

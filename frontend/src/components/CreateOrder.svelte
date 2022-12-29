@@ -61,7 +61,7 @@
                           placeholder={$_("create.placeholders.variants.vegan")}/>
     </label>
 </div>
-<button on:click={ createOrder }>✅</button>
+<button on:click={ createOrder }>✅🍕</button>
 
 <br><br><br><br><br>
 <Footer>
