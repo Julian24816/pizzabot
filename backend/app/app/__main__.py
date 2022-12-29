@@ -77,19 +77,24 @@ def delete_order(id: int):
     return "", 204
 
 
-def get_all_orders() -> list[Order]:
-    return [parse_order(order) for order in orders]
+def get_all_orders_without_edit_keys() -> list[Order]:
+    """Returns all orders from the database, without edit keys"""
+    result_orders = []
+    for order in orders:
+        result_orders.append(parse_order(order))
+        result_orders[-1].edit_key = None
+    return result_orders
 
 
 @app.route("/order")
 def get_orders():
-    return jsonify(get_all_orders())
+    return jsonify(get_all_orders_without_edit_keys())
 
 
 @app.route("/solved")
 def solved():
     solver = GreedySolver()
-    pizzas = solver.solve(get_all_orders())
+    pizzas = solver.solve(get_all_orders_without_edit_keys())
     return jsonify([dict(pizza) for pizza in pizzas])
 
 
