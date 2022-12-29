@@ -8,7 +8,6 @@ import css from 'rollup-plugin-css-only';
 import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
-const legalLink = process.env.LEGAL_LINK || '';
 
 export default {
 	input: 'src/main.js',
@@ -27,7 +26,6 @@ export default {
 		css({ output: 'bundle.css', needMap: !production }),
 
 		replace({
-			__LEGAL_LINK__: legalLink,
 			preventAssignment: true
 		}),
 

@@ -7,7 +7,6 @@ After=docker.service
 # For configuration, uncomment the following lines
 # and edit the paths to match your setup.
 #Environment="PORT=<choose a port>"
-#Environment="LEGAL_LINK=<link to your legal page>"
 #User=someuser
 #Group=somegroup
 Type=oneshot

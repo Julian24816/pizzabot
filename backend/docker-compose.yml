@@ -5,11 +5,9 @@ services:
   pizzabot-node:
     volumes:
       - frontend:/frontend
-    environment:
-      - LEGAL_LINK=${LEGAL_LINK}
     build:
       context: ..
-      dockerfile: backend/node/Dockerfile
+      dockerfile: ./backend/node/Dockerfile
 
   pizzabot-flask:
     volumes:
