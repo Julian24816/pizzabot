@@ -80,7 +80,6 @@ def delete_order(id: int):
     return "", 204
 
 
-
 def get_all_orders_without_edit_keys() -> List[Order]:
     """Returns all orders from the database, without edit keys"""
     result_orders = []
@@ -100,6 +99,14 @@ def solved():
     solver = GreedySolver()
     pizzas = solver.solve(get_all_orders_without_edit_keys())
     return jsonify([dict(pizza) for pizza in pizzas])
+
+
+@app.route("/clear", methods=["POST"])
+def clear_orders():
+    if request.json["password"] == "JulianIstToll":
+        orders.delete()
+        return "", 204
+    return jsonify({"error": "wrong password"}), 403
 
 
 @app.route("/")
