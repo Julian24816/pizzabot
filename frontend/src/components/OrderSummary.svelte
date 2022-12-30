@@ -18,13 +18,20 @@
         solved = await response.json();
     }
 
-    function formatPizzaNames(orders, targetNumber) {
+    function formatOrderedByNames(orders, targetNumber) {
         let names = {};
         for (let order of orders) names[order.user_name] = (names[order.user_name] || 0) + 1;
         const nobody = targetNumber - Object.values(names).reduce((a, b) => a + b, 0)
-        if (nobody > 0) names["nobody"] = nobody;
+        if (nobody > 0) names["🗑️😉"] = nobody;
         let namesWithNumbers = Object.keys(names).map(name => `${name} ${names[name]}x`);
-        return namesWithNumbers.join(', ');
+        return namesWithNumbers.join(", ");
+    }
+
+    function formatPizzaVariantCounts(pizzas) {
+        let types = {}
+        for (let pizza of pizzas) types[pizza.variant] = (types[pizza.variant] || 0) + 1;
+        let typesWithNumbers = Object.keys(types).map(name => `${types[name]}x ${name}`);
+        return typesWithNumbers.join(", ");
     }
 
     onMount(() => {
@@ -71,6 +78,18 @@
 
 
 <h1>{ $_("solved.title") }</h1>
+
+<p>
+    {#if solved.length === 0}
+        { $_("solved.count.none") }
+    {:else if solved.length === 1}
+        { $_("solved.count.single") }
+    {:else}
+        { $_("solved.count.multiple", {values: {count: solved.length}}) }
+    {/if}
+    ({ formatPizzaVariantCounts(solved) })
+</p>
+
 <table>
     <thead>
     <tr>
@@ -85,7 +104,7 @@
                 { pizza.variant }
             </td>
             <td>
-                { formatPizzaNames(pizza.assigned_orders, pizza.pieces) }
+                { formatOrderedByNames(pizza.assigned_orders, pizza.pieces) }
             </td>
         </tr>
     {/each}

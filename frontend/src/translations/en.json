@@ -1,10 +1,7 @@
 {
-  "links": {
-    "orders": "Orders",
-    "imprint": "Imprint"
-  },
   "create": {
     "title": "Create Order",
+    "sizeInfo": "Piece size",
     "error": {
       "missingName": "Name is missing!",
       "invalidPieceNumber": "Invalid number of pieces for {variant}!",
@@ -19,7 +16,8 @@
         "vegetarian": "Number of vegetarian pieces",
         "vegan": "Number of vegan pieces"
       }
-    }
+    },
+    "orders": "Orders"
   },
   "order": {
     "title": "Orders",
@@ -29,10 +27,20 @@
     "error": "Error deleting order"
   },
   "solved": {
-    "title": "Solved",
+    "title": "Distribution",
+    "count": {
+      "none": "no pizza",
+      "single": "1 pizza",
+      "multiple": "{count} pizzas"
+    },
     "tableHeadings": {
-      "variant": "Variant",
-      "who": "Who?"
+      "variant": "Type",
+      "who": "For:"
     }
+  },
+  "footer": {
+    "imprint": "Imprint",
+    "clearButton": "Clear Orders",
+    "clearError": "Error clearing orders: {message}"
   }
 }

@@ -1,10 +1,7 @@
 {
-  "links": {
-    "orders": "Bestellungen",
-    "imprint": "Impressum"
-  },
   "create": {
     "title": "Bestellung",
+    "sizeInfo": "Stückgröße",
     "error": {
       "missingName": "Name fehlt!",
       "invalidPieceNumber": "Ungültige Anzahl Stücke bei: {variant}!",
@@ -19,7 +16,8 @@
         "vegetarian": "Anzahl vegetarische Stücke",
         "vegan": "Anzahl vegane Stücke"
       }
-    }
+    },
+    "orders": "Bestellungen"
   },
   "order": {
     "title": "Bestellungen",
@@ -30,9 +28,19 @@
   },
   "solved": {
     "title": "Verteilung",
+    "count": {
+      "none": "Keine Pizza",
+      "single": "1 Pizza",
+      "multiple": "{count} Pizzen"
+    },
     "tableHeadings": {
       "variant": "Sorte",
       "who": "Für:"
+    },
+    "footer": {
+      "imprint": "Impressum",
+      "clearButton": "Alles Löschen",
+      "clearError": "Fehler beim löschen der Bestellungen: {message}"
     }
   }
 }

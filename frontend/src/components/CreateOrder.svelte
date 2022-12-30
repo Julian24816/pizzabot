@@ -41,6 +41,9 @@
 
 
 <h1>{ $_("create.title") }</h1>
+
+<p>{ $_("create.sizeInfo") }: 1.5dm²</p>
+
 <input bind:value={order.user_name} placeholder={$_("create.placeholders.name")} required type="text"/>
 <div class="numberInput">
     <label>🥩
@@ -65,7 +68,7 @@
 
 <br><br><br><br><br>
 <Footer>
-    <a href="/orders" use:link>{ $_("links.orders") }</a>
+    <a href="/orders" use:link>{ $_("create.orders") }</a>
 </Footer>
 
 
@@ -73,7 +76,7 @@
 
     input {
         display: block;
-        margin-bottom: 10px;
+        margin: 10px 0;
         font-size: 1.5em;
     }
 
